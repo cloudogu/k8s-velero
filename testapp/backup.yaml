@@ -1,0 +1,21 @@
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+#  labels:
+#    velero.io/storage-location: default # TODO Wird das wirklich gebraucht
+  name: eco-1
+  namespace: ecosystem
+spec:
+  csiSnapshotTimeout: 10m0s # TODO Als default in backup cr einfügen
+  defaultVolumesToFsBackup: false
+ # hooks: {} # TODO Als default in backup cr einfügen
+  includedNamespaces:
+    - ecosystem
+#  labelSelector:
+#    app: ces
+  itemOperationTimeout: 1h0m0s
+  ttl: 720h0m0s
+#  metadata: {}
+  storageLocation: default
+#  volumeSnapshotLocations:
+#    - default

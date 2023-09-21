@@ -1,9 +1,5 @@
 # k8s-velero
 
-## Compare with bitnami helm chart
-
-`helm template --repo https://charts.bitnami.com/bitnami etcd etcd > manifests/etcd.yaml`
-
 ---
 
 ### What is the Cloudogu EcoSystem?

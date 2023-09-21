@@ -23,5 +23,5 @@ k delete ns csi-app
 
 Apply backup:
 ```shell
-./velero restore create --from-backup csi-b1 --wait
+./testapp/velero restore create --from-backup csi-b1 --wait
 ```
