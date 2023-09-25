@@ -575,3 +575,9 @@ configMaps: {}
 ##
 ## End of additional Velero resource settings.
 ##
+
+volumesnapshotclass:
+  name: default-snapshot-vsc
+  driver: driver.longhorn.io
+  parameters:
+    type: bak

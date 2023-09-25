@@ -27,7 +27,7 @@ velero-release: ## Interactively starts the release workflow.
 .PHONY: helm-velero-apply
 helm-velero-apply: ${BINARY_HELM} helm-generate $(K8S_POST_GENERATE_TARGETS) ## Generates and installs the helm chart.
 	@echo "Apply generated helm chart"
-	@${BINARY_HELM} upgrade -i ${ARTIFACT_ID} ${K8S_HELM_TARGET}
+	@${BINARY_HELM} upgrade -i ${ARTIFACT_ID} ${K8S_HELM_TARGET} --namespace ${NAMESPACE}
 
 .PHONY: helm-velero-reinstall
 helm-velero-reinstall: helm-delete helm-velero-apply ## Uninstalls the current helm chart and reinstalls it.
