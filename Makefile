@@ -38,3 +38,16 @@ helm-velero-chart-import: ${BINARY_HELM} k8s-generate helm-generate-chart helm-p
 	@${BINARY_HELM} push ${K8S_HELM_RELEASE_TGZ} oci://${K3CES_REGISTRY_URL_PREFIX}/k8s ${BINARY_HELM_ADDITIONAL_PUSH_ARGS}
 	@echo "Done."
 
+.PHONY: component-velero-apply
+component-velero-apply: check-k8s-namespace-env-var helm-generate helm-velero-chart-import component-generate $(K8S_POST_GENERATE_TARGETS) ## Applies the component yaml resource to the actual defined context.
+	@kubectl apply -f "${K8S_RESOURCE_COMPONENT}" --namespace="${NAMESPACE}"
+	@echo "Done."
+
+.PHONY: component-velero-delete
+component-velero-delete: check-k8s-namespace-env-var component-generate $(K8S_POST_GENERATE_TARGETS) ## Deletes the component yaml resource from the actual defined context.
+	@kubectl delete -f "${K8S_RESOURCE_COMPONENT}" --namespace="${NAMESPACE}" || true
+	@echo "Done."
+
+.PHONY: component-velero-reinstall
+component-velero-reinstall: component-velero-delete  component-velero-apply ## Reinstalls the component yaml resource from the actual defined context.
+
