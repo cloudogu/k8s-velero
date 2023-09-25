@@ -2,11 +2,11 @@
 kind: VolumeSnapshotClass
 apiVersion: snapshot.storage.k8s.io/v1
 metadata:
-  name: {{- .Values.volumesnapshotclass.name }}
+  name: {{ .Values.volumesnapshotclass.name }}
   labels:
     velero.io/csi-volumesnapshot-class: "true"
 {{- if .Values.volumesnapshotclass.driver }}
-driver:  {{- .Values.volumesnapshotclass.driver }}
+driver:  {{ .Values.volumesnapshotclass.driver }}
 {{- end }}
 deletionPolicy: Delete
 {{- if .Values.volumesnapshotclass.parameters }}
