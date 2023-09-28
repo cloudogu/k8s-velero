@@ -17,4 +17,3 @@ spec:
     - backuprepositories.velero.io
   includedNamespaces:
     - '*'
-  itemOperationTimeout: 1h0m0s
