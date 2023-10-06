@@ -1,0 +1,11 @@
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  name: eco-1
+  namespace: ecosystem
+spec:
+  defaultVolumesToFsBackup: false
+  includedNamespaces:
+    - ecosystem
+  ttl: 720h0m0s
+  storageLocation: default
