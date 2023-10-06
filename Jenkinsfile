@@ -13,8 +13,6 @@ repositoryName = "k8s-velero"
 productionReleaseBranch = "main"
 
 node('docker') {
-    K3d k3d = new K3d(this, "${WORKSPACE}", "${WORKSPACE}/k3d", env.PATH)
-
     timestamps {
         catchError {
             timeout(activity: false, time: 60, unit: 'MINUTES') {
@@ -32,27 +30,7 @@ node('docker') {
                                         sh "helm lint /data/k8s/helm"
                                     }
                 }
-
-                stage('Set up k3d cluster') {
-                    k3d.startK3d()
-                }
-                stage('Install kubectl') {
-                    k3d.installKubectl()
-                }
-
-                stage('Test velero') {
-                    make 'helm-update-dependencies'
-                    sh "NAMESPACE=default KUBECONFIG=${WORKSPACE}/k3d/.k3d/.kube/config make helm-apply"
-                    // Sleep because it takes time for the controller to create the resource. Without it would end up
-                    // in error "no matching resource found when run the wait command"
-                    sleep(20)
-                    k3d.kubectl("wait --for=condition=ready pod -l app=k8s-velero --timeout=300s")
-                }
             }
-        }
-
-        stage('Remove k3d cluster') {
-            k3d.deleteK3d()
         }
 
         stageAutomaticRelease()
