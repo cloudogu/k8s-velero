@@ -41,6 +41,7 @@ node('docker') {
                 }
 
                 stage('Test velero') {
+                    make 'helm-update-dependencies'
                     sh "NAMESPACE=default KUBECONFIG=${WORKSPACE}/k3d/.k3d/.kube/config make helm-apply"
                     // Sleep because it takes time for the controller to create the resource. Without it would end up
                     // in error "no matching resource found when run the wait command"
@@ -87,7 +88,6 @@ void stageAutomaticRelease() {
                     .mountJenkinsUser()
                     .inside("--volume ${WORKSPACE}:/${repositoryName} -w /${repositoryName}")
                             {
-                                sh ".bin/helm dependency update k8s/helm"
                                 make 'helm-package-release'
 
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
