@@ -1,3 +1,6 @@
+## Requirements
+
+- [velero](https://github.com/vmware-tanzu/velero)
 
 ## Test Backup and Restore
 
@@ -13,7 +16,7 @@ kubectl -n csi-app exec -ti csi-nginx -- bash -c 'echo -n "FOOBARBAZ" >> /mnt/lo
 
 Do a backup:
 ```shell
-./testapp/velero backup create csi-b1 --include-namespaces csi-app --wait
+velero backup create csi-b1 --include-namespaces csi-app --wait
 ```
 
 Simulate disaster:
@@ -23,5 +26,5 @@ k delete ns csi-app
 
 Apply backup:
 ```shell
-./testapp/velero restore create --from-backup csi-b1 --wait
+velero restore create --from-backup csi-b1 --wait
 ```
