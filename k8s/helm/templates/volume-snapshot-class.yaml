@@ -4,6 +4,7 @@ apiVersion: snapshot.storage.k8s.io/v1
 metadata:
   name: {{ .Values.volumesnapshotclass.name }}
   labels:
+    {{- include "k8s-velero.labels" . | nindent 4 }}
     velero.io/csi-volumesnapshot-class: "true"
 {{- if .Values.volumesnapshotclass.driver }}
 driver:  {{ .Values.volumesnapshotclass.driver }}

@@ -1,4 +1,41 @@
+cesKeyVar: &appCesLabelKey "app"
+cesValueVar: &appCesLabelValue "ces"
+cloudoguPartOfKeyVar: &cloudoguPartOfLabelKey "k8s.cloudogu.com/part-of"
+cloudoguPartOfValueVar: &cloudoguPartOfLabelValue "backup"
+
+cesLabels: &cesLabels
+  *appCesLabelKey: *appCesLabelValue
+  *cloudoguPartOfLabelKey: *cloudoguPartOfLabelValue
+
 velero:
+  nameOverride: "k8s-velero"
+  labels:
+    *cesLabels
+  podLabels:
+    *cesLabels
+  metrics:
+    service:
+      labels:
+        *cesLabels
+    serviceMonitor:
+      additionalLabels:
+        *cesLabels
+    nodeAgentPodMonitor:
+      additionalLabels:
+        *cesLabels
+    prometheusRule:
+      additionalLabels:
+        *cesLabels
+  kubectl:
+    labels:
+      *cesLabels
+  serviceAccount:
+    server:
+      labels:
+        *cesLabels
+  nodeAgent:
+    labels:
+      *cesLabels
   # Init containers to add to the Velero deployment's pod spec. At least one plugin provider image is required.
   # If the value is a string then it is evaluated as a template.
   initContainers:
@@ -14,8 +51,6 @@ velero:
      volumeMounts:
        - mountPath: /target
          name: plugins
-
-
 
   ##
   ## Parameters for the `default` BackupStorageLocation and VolumeSnapshotLocation,
@@ -93,10 +128,6 @@ velero:
         aws_access_key_id=longhorn-test-key
         aws_secret_access_key=longhorn-test-secret-key
 
-
-aws_endpoint: http://192.168.56.1:9000
-aws_access_key_id: longhorn-test-key
-aws_secret_access_key:  longhorn-test-secret-key
 
 volumesnapshotclass:
   name: default-snapshot-vsc
