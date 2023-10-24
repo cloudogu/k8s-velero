@@ -26,3 +26,6 @@ dependencies:
   - name: velero
     version: 5.0.2
     repository: https://vmware-tanzu.github.io/helm-charts/
+
+annotations:
+  "k8s.cloudogu.com/ces-dependency/k8s-snapshot-controller-crd": "5.x.x-0"
