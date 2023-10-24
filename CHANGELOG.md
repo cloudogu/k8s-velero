@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.2-2] - 2023-10-24
+### Added
+- [#3] Add ces labels like `app: ces` or `k8s.cloudogu.com/part-of: backup` to deployment and pod resources.
+
 ## [v5.0.2-1] - 2023-10-06
 ### Added
 - [#1] Add initial version of the velero component.
