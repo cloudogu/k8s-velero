@@ -15,6 +15,8 @@ productionReleaseBranch = "main"
 goVersion = "1.21"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
+String registryNamespace = "k8s"
+String registryUrl = "registry.cloudogu.com"
 
 node('docker') {
     timestamps {
@@ -56,7 +58,7 @@ node('docker') {
                                         {
                                             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
                                                 sh ".bin/helm registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'"
-                                                sh ".bin/helm install k8s-snapshot-controller-crd oci://registry.cloudogu.com/k8s/k8s-snapshot-controller-crd --version 5.0.1-4"
+                                                sh ".bin/helm install k8s-snapshot-controller-crd oci://${registryUrl}/${registryNamespace}/k8s-snapshot-controller-crd --version 5.0.1-4"
 
                                             }
                                         }
@@ -89,8 +91,6 @@ void stageAutomaticRelease() {
         Makefile makefile = new Makefile(this)
         String releaseVersion = makefile.getVersion()
         String changelogVersion = git.getSimpleBranchName()
-        String registryNamespace = "k8s"
-        String registryUrl = "registry.cloudogu.com"
 
         stage('Push Helm chart to Harbor') {
             new Docker(this)
