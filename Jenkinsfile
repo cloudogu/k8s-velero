@@ -51,16 +51,10 @@ node('docker') {
                     }
 
                     stage('Deploy snapshot controller CRDs') {
-                        new Docker(this)
-                                .image("golang:${goVersion}")
-                                .mountJenkinsUser()
-                                .inside("--volume ${WORKSPACE}:/${repositoryName} -w /${repositoryName}")
-                                        {
-                                            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
-                                                k3d.helm("registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'")
-                                                k3d.helm("install k8s-snapshot-controller-crd oci://${registryUrl}/${registryNamespace}/k8s-snapshot-controller-crd --version 5.0.1-4")
-                                            }
-                                        }
+                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
+                            k3d.helm("registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'")
+                            k3d.helm("install k8s-snapshot-controller-crd oci://${registryUrl}/${registryNamespace}/k8s-snapshot-controller-crd --version 5.0.1-4")
+                        }
                     }
 
                     stage('Deploy k8s-velero') {
