@@ -35,7 +35,7 @@ node('docker') {
                                     stage('Generate k8s Resources') {
                                         make 'helm-update-dependencies'
                                         make 'helm-generate'
-                                        archiveArtifacts 'target/k8s/**/*'
+                                        archiveArtifacts "${helmTargetDir}/**/*"
                                     }
 
                                     stage("Lint helm") {
@@ -92,6 +92,7 @@ void stageAutomaticRelease() {
                     .inside("--volume ${WORKSPACE}:/${repositoryName} -w /${repositoryName}")
                             {
                                 make 'helm-package'
+                                archiveArtifacts "${helmTargetDir}/**/*"
 
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
                                     sh ".bin/helm registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'"
