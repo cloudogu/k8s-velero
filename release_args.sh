@@ -15,7 +15,7 @@ update_versions_modify_files() {
 
   # Extract longhorn chart
   local veleroVersion
-  veleroVersion=$(yq '.dependencies[] | select(.name="velero").version' < "k8s/helm/Chart.yaml")
+  veleroVersion=$(yq '.dependencies[] | select(.name=="velero").version' < "k8s/helm/Chart.yaml")
   local veleroPackage
   veleroPackage="k8s/helm/charts/velero-${veleroVersion}.tgz"
 
