@@ -67,6 +67,9 @@ node('docker') {
                         sleep(20)
                         k3d.kubectl("wait --for=condition=ready pod -l app.kubernetes.io/name=k8s-velero --timeout=300s")
                     }
+                } catch(Exception e) {
+                    k3d.collectAndArchiveLogs()
+                    throw e as java.lang.Throwable
                 } finally {
                     stage('Remove k3d cluster') {
                         k3d.deleteK3d()
