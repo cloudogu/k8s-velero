@@ -59,5 +59,3 @@ setAttributeInComponentPatchTemplate() {
 update_versions_stage_modified_files() {
   git add "${componentTemplateFile}"
 }
-
-update_versions_modify_files
