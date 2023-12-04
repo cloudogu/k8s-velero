@@ -1,12 +1,10 @@
 apiVersion: v1
-
 values:
   images:
     velero: velero/velero:v1.11.1
     kubectl: docker.io/bitnami/kubectl:1.28.4
     awsPlugin: velero/velero-plugin-for-aws:v1.7.1
     csiPlugin: velero/velero-plugin-for-csi:v0.5.1
-
 patches:
   values.yaml:
     velero:
