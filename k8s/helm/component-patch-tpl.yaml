@@ -1,0 +1,22 @@
+apiVersion: v1
+values:
+  images:
+    velero: velero/velero:v1.11.1
+    kubectl: docker.io/bitnami/kubectl:1.28.4
+    awsPlugin: velero/velero-plugin-for-aws:v1.7.1
+    csiPlugin: velero/velero-plugin-for-csi:v0.5.1
+patches:
+  values.yaml:
+    velero:
+      image:
+        repository: "{{ registryFrom .images.velero }}/{{ repositoryFrom .images.velero }}"
+        tag: "{{ tagFrom .images.velero }}"
+      initContainers:
+        - name: velero-plugin-for-aws
+          image: "{{ .images.awsPlugin }}"
+        - name: velero-plugin-for-csi
+          image: "{{ .images.csiPlugin }}"
+      kubectl:
+        image:
+          repository: "{{ registryFrom .images.kubectl }}/{{ repositoryFrom .images.kubectl }}"
+          tag: "{{ tagFrom .images.kubectl }}"

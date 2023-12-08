@@ -1,5 +1,5 @@
 #!groovy
-@Library('github.com/cloudogu/ces-build-lib@1.67.0')
+@Library('github.com/cloudogu/ces-build-lib@1.68.0')
 import com.cloudogu.ces.cesbuildlib.*
 
 git = new Git(this, "cesmarvin")
@@ -12,6 +12,12 @@ changelog = new Changelog(this)
 repositoryName = "k8s-velero"
 productionReleaseBranch = "main"
 
+goVersion = "1.21"
+helmTargetDir = "target/k8s"
+helmChartDir = "${helmTargetDir}/helm"
+String registryNamespace = "k8s"
+String registryUrl = "registry.cloudogu.com"
+
 node('docker') {
     timestamps {
         catchError {
@@ -21,20 +27,59 @@ node('docker') {
                     make 'clean'
                 }
 
-                helmImage = "alpine/helm:3.13.0"
-                stage("Lint k8s Resources") {
-                    new Docker(this)
-                            .image(helmImage)
-                            .inside("-v ${WORKSPACE}/:/data -t --entrypoint=")
-                                    {
-                                        sh "helm lint /data/k8s/helm"
+                new Docker(this)
+                        .image("golang:${goVersion}")
+                        .mountJenkinsUser()
+                        .inside("--volume ${WORKSPACE}:/${repositoryName} -w /${repositoryName}")
+                                {
+                                    stage('Generate k8s Resources') {
+                                        make 'helm-update-dependencies'
+                                        make 'helm-generate'
+                                        archiveArtifacts "${helmTargetDir}/**/*"
                                     }
+
+                                    stage("Lint helm") {
+                                        make 'helm-lint'
+                                    }
+                                }
+
+                K3d k3d = new K3d(this, "${WORKSPACE}", "${WORKSPACE}/k3d", env.PATH)
+
+                try {
+                    stage('Set up k3d cluster') {
+                        k3d.startK3d()
+                    }
+
+                    stage('Deploy snapshot controller CRDs') {
+                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
+                            k3d.helm("registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'")
+                            k3d.helm("install k8s-snapshot-controller-crd oci://${registryUrl}/${registryNamespace}/k8s-snapshot-controller-crd --version 5.0.1-4")
+                        }
+                    }
+
+                    stage('Deploy k8s-velero') {
+                        k3d.helm("install ${repositoryName} ${helmChartDir}")
+                    }
+
+                    stage('Test k8s-velero') {
+                        // Sleep because it takes time for the controller to create the resource. Without it would end up
+                        // in error "no matching resource found when run the wait command"
+                        sleep(20)
+                        k3d.kubectl("wait --for=condition=ready pod -l app.kubernetes.io/name=k8s-velero --timeout=300s")
+                    }
+                } catch(Exception e) {
+                    k3d.collectAndArchiveLogs()
+                    throw e as java.lang.Throwable
+                } finally {
+                    stage('Remove k3d cluster') {
+                        k3d.deleteK3d()
+                    }
                 }
             }
         }
-
-        stageAutomaticRelease()
     }
+
+    stageAutomaticRelease()
 }
 
 void stageAutomaticRelease() {
@@ -42,37 +87,25 @@ void stageAutomaticRelease() {
         Makefile makefile = new Makefile(this)
         String releaseVersion = makefile.getVersion()
         String changelogVersion = git.getSimpleBranchName()
-        String registryNamespace = "k8s"
-        String registryUrl = "registry.cloudogu.com"
-
-        stage('Finish Release') {
-            gitflow.finishRelease(releaseVersion, productionReleaseBranch)
-        }
-
-        stage('Generate release resource') {
-            make 'generate-release-resource'
-        }
-
-        stage('Push to Registry') {
-            GString targetEtcdResourceYaml = "target/make/${registryNamespace}/${repositoryName}_${releaseVersion}.yaml"
-
-            DoguRegistry registry = new DoguRegistry(this)
-            registry.pushK8sYaml(targetEtcdResourceYaml, repositoryName, registryNamespace, "${releaseVersion}")
-        }
 
         stage('Push Helm chart to Harbor') {
             new Docker(this)
-                    .image("golang:1.20")
+                    .image("golang:${goVersion}")
                     .mountJenkinsUser()
                     .inside("--volume ${WORKSPACE}:/${repositoryName} -w /${repositoryName}")
                             {
-                                make 'helm-package-release'
+                                make 'helm-package'
+                                archiveArtifacts "${helmTargetDir}/**/*"
 
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'harborhelmchartpush', usernameVariable: 'HARBOR_USERNAME', passwordVariable: 'HARBOR_PASSWORD']]) {
                                     sh ".bin/helm registry login ${registryUrl} --username '${HARBOR_USERNAME}' --password '${HARBOR_PASSWORD}'"
-                                    sh ".bin/helm push target/make/k8s/helm/${repositoryName}-${releaseVersion}.tgz oci://${registryUrl}/${registryNamespace}"
+                                    sh ".bin/helm push ${helmChartDir}/${repositoryName}-${releaseVersion}.tgz oci://${registryUrl}/${registryNamespace}"
                                 }
                             }
+        }
+
+        stage('Finish Release') {
+            gitflow.finishRelease(releaseVersion, productionReleaseBranch)
         }
 
         stage('Add Github-Release') {
