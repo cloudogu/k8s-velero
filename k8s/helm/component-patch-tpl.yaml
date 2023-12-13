@@ -14,8 +14,16 @@ patches:
       initContainers:
         - name: velero-plugin-for-aws
           image: "{{ .images.awsPlugin }}"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - mountPath: /target
+            name: plugins
         - name: velero-plugin-for-csi
           image: "{{ .images.csiPlugin }}"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /target
+              name: plugins
       kubectl:
         image:
           repository: "{{ registryFrom .images.kubectl }}/{{ repositoryFrom .images.kubectl }}"
