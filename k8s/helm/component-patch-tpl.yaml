@@ -16,8 +16,8 @@ patches:
           image: "{{ .images.awsPlugin }}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
-          - mountPath: /target
-            name: plugins
+            - mountPath: /target
+              name: plugins
         - name: velero-plugin-for-csi
           image: "{{ .images.csiPlugin }}"
           imagePullPolicy: IfNotPresent
