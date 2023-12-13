@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.2-4] - 2023-12-13
+### Fixed
+- [#7] Add volumemounts for init containers in patch templates.
+
 ## [v5.0.2-3] - 2023-12-08
 ### Added
 - [#5] Add patch templates for images for mirroring this chart in airgapped environments.

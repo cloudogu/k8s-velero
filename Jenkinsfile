@@ -15,8 +15,8 @@ productionReleaseBranch = "main"
 goVersion = "1.21"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
-String registryNamespace = "k8s"
-String registryUrl = "registry.cloudogu.com"
+registryNamespace = "k8s"
+registryUrl = "registry.cloudogu.com"
 
 node('docker') {
     timestamps {
