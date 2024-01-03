@@ -123,13 +123,14 @@ velero:
           region: minio-default
     features: EnableCSI
 
+  # Info about the secret to be used by the Velero deployment, which
+  # should contain credentials for the cloud provider IAM account you've
+  # set up for Velero.
   credentials:
+    # Whether a secret should be used. Set to false if, for examples:
     useSecret: true
-    secretContents:
-      cloud: |
-        [default]
-        aws_access_key_id=longhorn-test-key
-        aws_secret_access_key=longhorn-test-secret-key
+    # Name of a pre-existing secret in the Velero namespace
+    existingSecret:
 
 
 volumesnapshotclass:
