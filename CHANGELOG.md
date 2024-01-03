@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.3-5] - 2024-01-03
+### Changed
+- [#9] Use existing secret for backup-storage
+
 ## [v5.0.2-4] - 2023-12-13
 ### Fixed
 - [#7] Add volumemounts for init containers in patch templates.
