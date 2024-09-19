@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.2-6] - 2024-09-19
+- Relicense to AGPL-3.0-only
+
 ## [v5.0.2-5] - 2024-01-03
 ### Changed
 - [#9] Use existing secret for backup-storage
