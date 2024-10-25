@@ -8,6 +8,9 @@ cesLabels: &cesLabels
   *cloudoguPartOfLabelKey: *cloudoguPartOfLabelValue
 
 velero:
+  image:
+    imagePullSecrets:
+      - "ces-container-registries"
   nameOverride: "k8s-velero"
   labels:
     *cesLabels
