@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.2-9] - 2024-12-05
+### Fixed
+- [#18] change label of podSelector to match k8s-velero
+
 ## [v5.0.2-8] - 2024-12-05
 ### Added
 - [#16] add deny all NetworkPolicy
