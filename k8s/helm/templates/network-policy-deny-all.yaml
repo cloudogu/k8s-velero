@@ -11,7 +11,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: velero
+      app.kubernetes.io/name: k8s-velero
   policyTypes:
     - Ingress
 {{- end }}
