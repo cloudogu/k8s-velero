@@ -141,3 +141,7 @@ volumesnapshotclass:
   driver: driver.longhorn.io
   parameters:
     type: bak
+
+
+networkPolicies:
+  enabled: true
