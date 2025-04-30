@@ -8,6 +8,12 @@ cesLabels: &cesLabels
   *cloudoguPartOfLabelKey: *cloudoguPartOfLabelValue
 
 velero:
+  resources:
+    limits:
+      memory: 184M
+    requests:
+      cpu: 15m
+      memory: 184M
   image:
     imagePullSecrets:
       - "ces-container-registries"
