@@ -63,6 +63,12 @@ velero:
      volumeMounts:
        - mountPath: /target
          name: plugins
+   - name: velero-plugin-for-restore-exclude
+     image: cloudogu/velero-plugin-for-restore-exclude:v0.1.0
+     imagePullPolicy: IfNotPresent
+     volumeMounts:
+       - mountPath: /target
+         name: plugins
 
   ##
   ## Parameters for the `default` BackupStorageLocation and VolumeSnapshotLocation,
@@ -148,6 +154,11 @@ volumesnapshotclass:
   parameters:
     type: bak
 
+excludedFromRestores:
+  - name: "ces-loadbalancer"
+    group: ""
+    version: "v1"
+    kind: "Service"
 
 networkPolicies:
   enabled: true
