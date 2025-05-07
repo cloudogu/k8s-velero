@@ -64,7 +64,7 @@ velero:
        - mountPath: /target
          name: plugins
    - name: velero-plugin-for-restore-exclude
-     image: cloudogu/velero-plugin-for-restore-exclude:v0.1.0
+     image: cloudogu/velero-plugin-for-restore-exclude:0.1.0
      imagePullPolicy: IfNotPresent
      volumeMounts:
        - mountPath: /target
