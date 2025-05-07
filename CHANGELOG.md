@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.2-11] - 2025-05-07
+### Added
+- [#22] Plugin for restore exclude
+
 ## [v5.0.2-10] - 2025-04-30
 
 ### Changed
