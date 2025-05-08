@@ -25,4 +25,4 @@ metadata:
 data:
   restore: |
     exclude:
-      {{ toYaml .Values.excludedFromRestores | nindent 6 }}
+      {{- toYaml .Values.excludedFromRestores | nindent 6 }}
