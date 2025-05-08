@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- [#24] Restore of backup components lead to errors after restore
+    - This is because the component operator would detect a downgrade, which is not allowed.
+      Or worse, an upgrade during the restore operation would cause it to fail.
+
 ### Changed
 - [#24] exclude all components of the backup stack in the restore 
 
