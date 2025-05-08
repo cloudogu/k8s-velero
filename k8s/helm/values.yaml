@@ -156,9 +156,28 @@ volumesnapshotclass:
 
 excludedFromRestores:
   - name: "ces-loadbalancer"
-    group: ""
-    version: "v1"
     kind: "Service"
+    version: "*"
+  - name: "k8s-backup-operator"
+    kind: "Component"
+    version: "*"
+    group: "k8s.cloudogu.com"
+  - name: "k8s-backup-operator-crd"
+    kind: "Component"
+    version: "*"
+    group: "k8s.cloudogu.com"
+  - name: "k8s-snapshot-controller"
+    kind: "Component"
+    version: "*"
+    group: "k8s.cloudogu.com"
+  - name: "k8s-snapshot-controller-crd"
+    kind: "Component"
+    version: "*"
+    group: "k8s.cloudogu.com"
+  - name: "k8s-velero"
+    kind: "Component"
+    version: "*"
+    group: "k8s.cloudogu.com"
 
 networkPolicies:
   enabled: true

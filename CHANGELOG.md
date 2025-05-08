@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.2-12] - 2025-05-08
+### Fixed
+- [#24] Restore of backup components lead to errors after restore
+    - This is because the component operator would detect a downgrade, which is not allowed.
+      Or worse, an upgrade during the restore operation would cause it to fail.
+
+### Changed
+- [#24] exclude all components of the backup stack in the restore 
+
 ## [v5.0.2-11] - 2025-05-07
 ### Added
 - [#22] Plugin for restore exclude
