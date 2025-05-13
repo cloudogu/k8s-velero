@@ -178,6 +178,9 @@ excludedFromRestores:
     kind: "Component"
     version: "*"
     group: "k8s.cloudogu.com"
+  - name: "ecosystem-certificate"
+    kind: "Secret"
+    version: "*"
 
 networkPolicies:
   enabled: true
