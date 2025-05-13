@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v5.0.2-13] - 2025-05-13
+### Fixed
+- [#26] Restore of an old ecosystem-certificate could make the ecosystem unavailable
+### Changed
+- [#26] Exclude ecosystem-certificate from restore
+
 ## [v5.0.2-12] - 2025-05-08
 ### Fixed
 - [#24] Restore of backup components lead to errors after restore
