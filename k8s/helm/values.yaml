@@ -17,7 +17,8 @@ velero:
   image:
     imagePullSecrets:
       - "ces-container-registries"
-  nameOverride: "k8s-velero"
+  nameOverride: "velero"
+  fullnameOverride: "velero"
   labels:
     *cesLabels
   podLabels:
@@ -58,7 +59,7 @@ velero:
        - mountPath: /target
          name: plugins
    - name: velero-plugin-for-restore-exclude
-     image: cloudogu/velero-plugin-for-restore-exclude:0.1.0
+     image: k3ces.local:30099/velero-plugin-for-restore-exclude/feature-3-update-outdated-dependencies:0.1.0
      imagePullPolicy: IfNotPresent
      volumeMounts:
        - mountPath: /target
