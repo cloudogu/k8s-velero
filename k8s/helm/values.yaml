@@ -59,7 +59,7 @@ velero:
        - mountPath: /target
          name: plugins
    - name: velero-plugin-for-restore-exclude
-     image: k3ces.local:30099/velero-plugin-for-restore-exclude/feature-3-update-outdated-dependencies:0.1.0
+     image: cloudogu/velero-plugin-for-restore-exclude:1.0.0
      imagePullPolicy: IfNotPresent
      volumeMounts:
        - mountPath: /target
