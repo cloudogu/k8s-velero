@@ -4,7 +4,7 @@ values:
     velero: velero/velero:v1.16.0
     kubectl: docker.io/bitnami/kubectl:1.33.1
     awsPlugin: velero/velero-plugin-for-aws:v1.12.1
-    restoreExcludePlugin: cloudogu/velero-plugin-for-restore-exclude:0.1.0
+    restoreExcludePlugin: cloudogu/velero-plugin-for-restore-exclude:1.0.0
 patches:
   values.yaml:
     velero:
