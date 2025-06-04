@@ -9,7 +9,13 @@ metadata:
 {{- if .Values.volumesnapshotclass.driver }}
 driver:  {{ .Values.volumesnapshotclass.driver }}
 {{- end }}
-deletionPolicy: Delete
+# Setting a DeletionPolicy of Retain on the VolumeSnapshotClass
+# will preserve the volume snapshot in the storage system
+# for the lifetime of the Velero backup and will prevent
+# the deletion of the volume snapshot in the storage system
+# in the event of a disaster where the namespace with the
+# VolumeSnapshot object may be lost.
+deletionPolicy: Retain
 {{- if .Values.volumesnapshotclass.parameters }}
 parameters:
   {{- if .Values.volumesnapshotclass.parameters.type }}
