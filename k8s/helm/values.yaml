@@ -17,7 +17,8 @@ velero:
   image:
     imagePullSecrets:
       - "ces-container-registries"
-  nameOverride: "k8s-velero"
+  nameOverride: "velero"
+  fullnameOverride: "velero"
   labels:
     *cesLabels
   podLabels:
@@ -38,7 +39,7 @@ velero:
   kubectl:
     image:
       repository: docker.io/bitnami/kubectl
-      tag: 1.28.4
+      tag: 1.33.1
     labels:
       *cesLabels
   serviceAccount:
@@ -48,23 +49,19 @@ velero:
   nodeAgent:
     labels:
       *cesLabels
+  # we don't need this API
+  snapshotsEnabled: false
   # Init containers to add to the Velero deployment's pod spec. At least one plugin provider image is required.
   # If the value is a string then it is evaluated as a template.
   initContainers:
    - name: velero-plugin-for-aws
-     image: velero/velero-plugin-for-aws:v1.7.1
-     imagePullPolicy: IfNotPresent
-     volumeMounts:
-       - mountPath: /target
-         name: plugins
-   - name: velero-plugin-for-csi
-     image: velero/velero-plugin-for-csi:v0.5.1
+     image: velero/velero-plugin-for-aws:v1.12.1
      imagePullPolicy: IfNotPresent
      volumeMounts:
        - mountPath: /target
          name: plugins
    - name: velero-plugin-for-restore-exclude
-     image: cloudogu/velero-plugin-for-restore-exclude:0.1.0
+     image: cloudogu/velero-plugin-for-restore-exclude:1.0.0
      imagePullPolicy: IfNotPresent
      volumeMounts:
        - mountPath: /target
