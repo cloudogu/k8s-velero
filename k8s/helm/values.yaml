@@ -10,10 +10,10 @@ cesLabels: &cesLabels
 velero:
   resources:
     limits:
-      memory: 184M
+      memory: 300M
     requests:
       cpu: 15m
-      memory: 184M
+      memory: 300M
   image:
     imagePullSecrets:
       - "ces-container-registries"
