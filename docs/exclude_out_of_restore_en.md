@@ -1,4 +1,4 @@
-# Exclude files in the restore process
+# Exclude resources in the restore process
 
 A [plugin for excluding resources from the backup](https://github.com/cloudogu/velero-plugin-for-restore-exclude/) exists for the restore provider `velero`.
 This plugin can be used with `velero` in the cluster and configured with the attribute `excludedFromRestores`.

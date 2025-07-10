@@ -1,4 +1,4 @@
-# Dateien im Restore-Prozess ausschließen
+# Ressourcen im Restore-Prozess ausschließen
 
 Für den Restore-Provider `velero` existiert ein
 [Plugin zum Ausschließen von Ressourcen aus dem Backup](https://github.com/cloudogu/velero-plugin-for-restore-exclude/).
