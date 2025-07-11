@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v10.0.1-3] - 2025-07-11
+### Changed
+- [#32] Update docs to include restore ecludes and a better sample structure
+
 ## [v10.0.1-2] - 2025-06-26
 ### Changed
 - [#30] raise memory for velero up to 300M to prevent OOM kills
