@@ -29,9 +29,9 @@ update_versions_modify_files() {
   local awsPluginImage
   awsPluginImage=$(yq '.velero.initContainers[] | select(.name=="velero-plugin-for-aws").image' < "${values}")
   setAttributeInComponentPatchTemplate ".values.images.awsPlugin" "${awsPluginImage}"
-  local csiPluginImage
-  csiPluginImage=$(yq '.velero.initContainers[] | select(.name=="velero-plugin-for-csi").image' < "${values}")
-  setAttributeInComponentPatchTemplate ".values.images.csiPlugin" "${csiPluginImage}"
+  local restoreExcludePluginImage
+  restoreExcludePluginImage=$(yq '.velero.initContainers[] | select(.name=="velero-plugin-for-restore-exclude").image' < "${values}")
+  setAttributeInComponentPatchTemplate ".values.images.restoreExcludePlugin" "${restoreExcludePluginImage}"
 
   rm -rf ${veleroTempChart}
 }
