@@ -6,7 +6,7 @@
 
 Install test application:
 ```shell
-k apply -f testapp/app.yaml
+k apply -f ../samples/testapp/app.yaml
 ```
 
 Write test data:

@@ -1,0 +1,85 @@
+apiVersion: k8s.cloudogu.com/v1
+kind: Blueprint
+metadata:
+  labels:
+    app.kubernetes.io/name: blueprint
+    app.kubernetes.io/instance: blueprint-sample
+  name: blueprint-add-backup-configuration
+spec:
+  blueprint: |
+    {
+    "blueprintApi":"v2",
+    "config": {
+      "global": {}
+    },
+    "components": [
+      {
+        "name":"k8s/k8s-velero",
+        "targetState":"present",
+        "version":"10.0.1-2",
+        "deployConfig":{
+          "overwriteConfig":{
+            "volumesnapshotclass": {
+              "driver": "pd.csi.storage.gke.io",
+              "parameters": {
+                "type": ""
+              }
+            },
+            "velero": {
+              "credentials": {
+                "useSecret": true,
+                "existingSecret": "velero-backup-target"
+              },
+              "initContainers": [
+                {
+                  "name": "velero-plugin-for-gcp",
+                  "image": "velero/velero-plugin-for-gcp:v1.12.1",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/target",
+                      "name": "plugins"
+                    }
+                  ]
+                },
+                {
+                  "name": "velero-plugin-for-restore-exclude",
+                  "image": "cloudogu/velero-plugin-for-restore-exclude:1.0.0",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/target",
+                      "name": "plugins"
+                    }
+                  ]
+                }
+              ],
+              "configuration": {
+                "backupStorageLocation": [
+                  {
+                    "name": "default",
+                    "provider": "velero.io/gcp",
+                    "bucket": "example-bucket",
+                    "config": {
+                      "serviceAccount": "example-service-account",
+                      "kmsKeyName": "path/to/example/key"
+                    }
+                  }
+                ],
+                "volumeSnapshotLocation": [
+                  {
+                    "name": "default",
+                    "provider": "velero.io/gcp",
+                    "config": {
+                      "snapshotLocation": "europe-west3"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]}
+  blueprintMask: |
+    {"blueprintMaskApi":"v1"}
+  ignoreDoguHealth: false
+  allowDoguNamespaceSwitch: false
