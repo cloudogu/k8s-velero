@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v10.0.1-4] - 2025-07-17
+### Changed
+- [#34] Update Makefiles to 10.2.0
+### Added
+- [#34] Configure Log-Level via Value-Mapping
+
 ## [v10.0.1-3] - 2025-07-11
 ### Changed
 - [#32] Update docs to include restore ecludes and a better sample structure
