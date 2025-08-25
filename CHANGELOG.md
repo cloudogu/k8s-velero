@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v10.0.1-5] - 2025-08-25
+### Changed
+- [#20] Use "bitnamilegacy"-images for Velero
+
 ## [v10.0.1-4] - 2025-07-17
 ### Changed
 - [#34] Update Makefiles to 10.2.0

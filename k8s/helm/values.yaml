@@ -38,8 +38,8 @@ velero:
         *cesLabels
   kubectl:
     image:
-      repository: docker.io/bitnami/kubectl
-      tag: 1.33.1
+      repository: docker.io/bitnamilegacy/kubectl
+      tag: 1.33.4
     labels:
       *cesLabels
   serviceAccount:
