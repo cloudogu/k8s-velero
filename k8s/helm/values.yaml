@@ -60,12 +60,6 @@ velero:
      volumeMounts:
        - mountPath: /target
          name: plugins
-   - name: velero-plugin-for-restore-exclude
-     image: cloudogu/velero-plugin-for-restore-exclude:1.0.0
-     imagePullPolicy: IfNotPresent
-     volumeMounts:
-       - mountPath: /target
-         name: plugins
 
   ##
   ## Parameters for the `default` BackupStorageLocation and VolumeSnapshotLocation,
@@ -154,34 +148,6 @@ volumesnapshotclass:
   driver: driver.longhorn.io
   parameters:
     type: bak
-
-excludedFromRestores:
-  - name: "ces-loadbalancer"
-    kind: "Service"
-    version: "*"
-  - name: "k8s-backup-operator"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-backup-operator-crd"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-snapshot-controller"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-snapshot-controller-crd"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-velero"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "ecosystem-certificate"
-    kind: "Secret"
-    version: "*"
 
 networkPolicies:
   enabled: true
