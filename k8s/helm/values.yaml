@@ -91,11 +91,13 @@ velero:
         # accessMode determines if velero can write to this backup storage location. Optional.
         # default to ReadWrite, ReadOnly is used during migrations and restores.
         accessMode: ReadWrite
+        # credential for the storage location. Optional.
+        # May contain the name and key of the secret the credential is stored in.
         credential:
           # name of the secret used by this backupStorageLocation.
-          name:
+          #name:
           # name of key that contains the secret data to be used.
-          key:
+          #key:
         # Additional provider-specific configuration. See link above
         # for details of required/optional fields for your provider.
         config:
