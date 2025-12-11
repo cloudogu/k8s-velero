@@ -60,12 +60,6 @@ velero:
      volumeMounts:
        - mountPath: /target
          name: plugins
-   - name: velero-plugin-for-restore-exclude
-     image: cloudogu/velero-plugin-for-restore-exclude:1.0.0
-     imagePullPolicy: IfNotPresent
-     volumeMounts:
-       - mountPath: /target
-         name: plugins
 
   ##
   ## Parameters for the `default` BackupStorageLocation and VolumeSnapshotLocation,
@@ -97,11 +91,13 @@ velero:
         # accessMode determines if velero can write to this backup storage location. Optional.
         # default to ReadWrite, ReadOnly is used during migrations and restores.
         accessMode: ReadWrite
+        # credential for the storage location. Optional.
+        # May contain the name and key of the secret the credential is stored in.
         credential:
           # name of the secret used by this backupStorageLocation.
-          name:
+          #name:
           # name of key that contains the secret data to be used.
-          key:
+          #key:
         # Additional provider-specific configuration. See link above
         # for details of required/optional fields for your provider.
         config:
@@ -154,34 +150,6 @@ volumesnapshotclass:
   driver: driver.longhorn.io
   parameters:
     type: bak
-
-excludedFromRestores:
-  - name: "ces-loadbalancer"
-    kind: "Service"
-    version: "*"
-  - name: "k8s-backup-operator"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-backup-operator-crd"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-snapshot-controller"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-snapshot-controller-crd"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "k8s-velero"
-    kind: "Component"
-    version: "*"
-    group: "k8s.cloudogu.com"
-  - name: "ecosystem-certificate"
-    kind: "Secret"
-    version: "*"
 
 networkPolicies:
   enabled: true
