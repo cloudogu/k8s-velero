@@ -4,7 +4,6 @@ values:
     velero: velero/velero:v1.16.0
     kubectl: docker.io/bitnamilegacy/kubectl:1.33.4
     awsPlugin: velero/velero-plugin-for-aws:v1.12.1
-    restoreExcludePlugin: cloudogu/velero-plugin-for-restore-exclude:1.0.0
 patches:
   values.yaml:
     velero:
@@ -14,12 +13,6 @@ patches:
       initContainers:
         - name: velero-plugin-for-aws
           image: "{{ .images.awsPlugin }}"
-          imagePullPolicy: IfNotPresent
-          volumeMounts:
-            - mountPath: /target
-              name: plugins
-        - name: velero-plugin-for-restore-exclude
-          image: "{{ .images.restoreExcludePlugin }}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /target
