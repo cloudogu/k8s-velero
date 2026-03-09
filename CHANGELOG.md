@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - The default secret for the default backup storage location is now `velero-backup-target` with key `cloud`
   - Use custom kubectl and update velero image to avoid CVE-2025-68121
 
+## [v10.0.1-6] - 2025-12-11
+### Removed
+- [#39] Remove now unnecessary velero-plugin-for-restore-exclude
+  - This has become mostly obsolete as now only Dogus are included in the backup.
+
 ## [v10.0.1-5] - 2025-08-25
 ### Changed
 - [#20] Use "bitnamilegacy"-images for Velero
