@@ -15,6 +15,7 @@ velero:
       cpu: 15m
       memory: 300M
   image:
+    tag: v1.18.0
     imagePullSecrets:
       - "ces-container-registries"
   nameOverride: "velero"
@@ -38,8 +39,8 @@ velero:
         *cesLabels
   kubectl:
     image:
-      repository: docker.io/bitnamilegacy/kubectl
-      tag: 1.33.4
+      repository: docker.io/cloudogu/k8s-velero-kubectl
+      tag: 1.35.2
     labels:
       *cesLabels
   serviceAccount:
@@ -55,7 +56,7 @@ velero:
   # If the value is a string then it is evaluated as a template.
   initContainers:
    - name: velero-plugin-for-aws
-     image: velero/velero-plugin-for-aws:v1.12.1
+     image: velero/velero-plugin-for-aws:v1.14.0
      imagePullPolicy: IfNotPresent
      volumeMounts:
        - mountPath: /target
@@ -99,9 +100,9 @@ velero:
         accessMode: ReadWrite
         credential:
           # name of the secret used by this backupStorageLocation.
-          name:
+          name: velero-backup-target
           # name of key that contains the secret data to be used.
-          key:
+          key: cloud
         # Additional provider-specific configuration. See link above
         # for details of required/optional fields for your provider.
         config:
