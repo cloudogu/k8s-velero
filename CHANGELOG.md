@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v11.4.0-1] - 2026-03-10
+### Changed
+- [#38] Update velero to chart to 11.4.0
+  - The default secret for the default backup storage location is now `velero-backup-target` with key `cloud`
+  - Use custom kubectl and update velero image to avoid CVE-2025-68121
+
 ## [v10.0.1-6] - 2025-12-11
 ### Removed
 - [#39] Remove now unnecessary velero-plugin-for-restore-exclude
