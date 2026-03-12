@@ -5,7 +5,6 @@ set -o pipefail
 
 componentTemplateFile=k8s/helm/component-patch-tpl.yaml
 veleroTempChart="/tmp/velero"
-veleroTempValues="${veleroTempChart}/values.yaml"
 values="k8s/helm/values.yaml"
 
 # this function will be sourced from release.sh and be called from release_functions.sh
@@ -23,7 +22,7 @@ update_versions_modify_files() {
   tar -zxvf "${veleroPackage}" -C "/tmp" > /dev/null
 
   echo "Set images in component path template"
-  update_component_patch_template ".values.images.velero" ".image" "${veleroTempValues}"
+  update_component_patch_template ".values.images.velero" ".velero.image" "${values}"
   update_component_patch_template ".values.images.kubectl" ".velero.kubectl.image" "${values}"
 
   local awsPluginImage
