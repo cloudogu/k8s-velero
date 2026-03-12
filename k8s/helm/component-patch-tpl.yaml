@@ -2,7 +2,7 @@ apiVersion: v1
 values:
   images:
     velero: velero/velero:v1.16.0
-    kubectl: docker.io/bitnamilegacy/kubectl:1.33.4
+    kubectl: docker.io/cloudogu/k8s-velero-kubectl:1.35.2
     awsPlugin: velero/velero-plugin-for-aws:v1.12.1
 patches:
   values.yaml:
