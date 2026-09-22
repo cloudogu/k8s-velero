@@ -16,7 +16,7 @@ velero:
       memory: 300M
   image:
     repository: docker.io/velero/velero
-    tag: v1.18.0
+    tag: v1.18.3
     imagePullSecrets:
       - "ces-container-registries"
   nameOverride: "velero"
@@ -57,7 +57,7 @@ velero:
   # If the value is a string then it is evaluated as a template.
   initContainers:
    - name: velero-plugin-for-aws
-     image: velero/velero-plugin-for-aws:v1.14.0
+     image: velero/velero-plugin-for-aws:v1.14.3
      imagePullPolicy: IfNotPresent
      volumeMounts:
        - mountPath: /target

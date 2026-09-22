@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v11.4.0-3] - 2026-09-22
+### Changed
+- [#45] Update velero and velero-plugin-for-aws to fix CVE-2026-33186
+
+### Added
+- [#43] add german doc translations
+
 ## [v11.4.0-2] - 2026-03-12
 ### Fixed
 - Fixed kubectl image in component-patch-tpl.yaml
