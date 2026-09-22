@@ -12,7 +12,7 @@ changelog = new Changelog(this)
 repositoryName = "k8s-velero"
 productionReleaseBranch = "main"
 
-goVersion = "1.21"
+goVersion = "1.27.1"
 helmTargetDir = "target/k8s"
 helmChartDir = "${helmTargetDir}/helm"
 registryNamespace = "k8s"
